@@ -1,0 +1,30 @@
+# Ignore Node.js build artifacts
+node_modules/
+/dist/
+.cache/
+yarn-error.log
+yarn.lock
+
+# Ignore editor and operating system files
+*.log
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Ignore build output files
+/*.js
+/*.js.map
+/*.d.ts
+/*.d.ts.map
+
+# Ignore Vue CLI generated files
+babel.config.js
+jest.config.js
+vue.config.js
+
+# Exclude private API keys and other sensitive information
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
