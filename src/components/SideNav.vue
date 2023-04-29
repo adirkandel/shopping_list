@@ -22,14 +22,14 @@
     </div>
 
     <div class="flex flex-col gap-y-2">
-      <a
+      <router-link
         v-for="item in menuItems"
-        :href="item.link"
+        :to="item.link"
         class="p-2.5 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600"
       >
         <component :is="item.icon" />
         <span class="text-[15px] mr-4 text-gray-200 font-bold">{{ item.title }}</span>
-      </a>
+      </router-link>
     </div>
 
     <div class="flex justify-between items-center w-full p-2 mt-auto">
@@ -65,12 +65,12 @@
     {
       icon: IconCatalog,
       title: 'רשימות',
-      link: 'lists'
+      link: '/lists'
     },
     {
       icon: IconApple,
       title: 'מוצרים',
-      link: 'items'
+      link: '/products'
     }
   ]
 </script>
