@@ -1,22 +1,34 @@
 import { defineStore } from 'pinia'
 
-interface Category {
+export interface Category {
   uuid: string;
   name: string;
 }
 
-interface Item {
+interface Product {
   uuid: string;
   name: string;
-  quantity: number;
   image: string;
   categoryId: Category['uuid'];
+}
+
+interface Item {
+  productId: Product['uuid'];
+  quantity: number;
   isChecked: boolean;
+}
+
+interface List {
+  items: Item[]
+  name?: string
+  doneAt?: Date
 }
 
 interface State {
   categories: Category[]
-  items: Item[]
+  products: Product[],
+  activeList: List
+  lists: List[]
 }
 
 const state: State = {
@@ -27,22 +39,65 @@ const state: State = {
     { uuid: '4', name: 'Meat and Poultry' },
     { uuid: '5', name: 'Snacks' },
   ],
-  items: [
-    { uuid: '1', name: 'Milk', quantity: 1, image: 'milk.jpg', categoryId: '1', isChecked: false },
-    { uuid: '2', name: 'Cheese', quantity: 2, image: 'cheese.jpg', categoryId: '1', isChecked: false },
-    { uuid: '3', name: 'Yogurt', quantity: 3, image: 'yogurt.jpg', categoryId: '1', isChecked: false },
-    { uuid: '4', name: 'Apples', quantity: 4, image: 'apples.jpg', categoryId: '2', isChecked: false },
-    { uuid: '5', name: 'Bananas', quantity: 5, image: 'bananas.jpg', categoryId: '2', isChecked: false },
-    { uuid: '6', name: 'Tomatoes', quantity: 6, image: 'tomatoes.jpg', categoryId: '2', isChecked: false },
-    { uuid: '7', name: 'Bread', quantity: 7, image: 'bread.jpg', categoryId: '3', isChecked: false },
-    { uuid: '8', name: 'Baguette', quantity: 8, image: 'baguette.jpg', categoryId: '3', isChecked: false },
-    { uuid: '9', name: 'Croissant', quantity: 9, image: 'croissant.jpg', categoryId: '3', isChecked: false },
-    { uuid: '10', name: 'Chicken', quantity: 10, image: 'chicken.jpg', categoryId: '4', isChecked: false },
-    { uuid: '11', name: 'Beef', quantity: 11, image: 'beef.jpg', categoryId: '4', isChecked: false },
-    { uuid: '12', name: 'Fish', quantity: 12, image: 'fish.jpg', categoryId: '4', isChecked: false },
-    { uuid: '13', name: 'Doritos', quantity: 13, image: 'Doritos.jpg', categoryId: '5', isChecked: false },
-    { uuid: '14', name: 'Popcorn', quantity: 14, image: 'popcorn.jpg', categoryId: '5', isChecked: false },
-    { uuid: '15', name: 'Candy', quantity: 15, image: 'candy.jpg', categoryId: '5', isChecked: false }
+  products: [
+    { uuid: '1', name: 'Milk', image: 'milk.jpg', categoryId: '1' },
+    { uuid: '2', name: 'Cheese', image: 'cheese.jpg', categoryId: '1' },
+    { uuid: '3', name: 'Yogurt', image: 'yogurt.jpg', categoryId: '1' },
+    { uuid: '4', name: 'Apples', image: 'apples.jpg', categoryId: '2' },
+    { uuid: '5', name: 'Bananas', image: 'bananas.jpg', categoryId: '2' },
+    { uuid: '6', name: 'Tomatoes', image: 'tomatoes.jpg', categoryId: '2' },
+    { uuid: '7', name: 'Bread', image: 'bread.jpg', categoryId: '3' },
+    { uuid: '8', name: 'Baguette', image: 'baguette.jpg', categoryId: '3' },
+    { uuid: '9', name: 'Croissant', image: 'croissant.jpg', categoryId: '3' },
+    { uuid: '10', name: 'Chicken', image: 'chicken.jpg', categoryId: '4' },
+    { uuid: '11', name: 'Beef', image: 'beef.jpg', categoryId: '4' },
+    { uuid: '12', name: 'Fish', image: 'fish.jpg', categoryId: '4' },
+    { uuid: '13', name: 'Doritos', image: 'Doritos.jpg', categoryId: '5' },
+    { uuid: '14', name: 'Popcorn', image: 'popcorn.jpg', categoryId: '5' },
+    { uuid: '15', name: 'Candy', image: 'candy.jpg', categoryId: '5' }
+  ],
+  activeList: {
+    name: 'רשימה של אדיר',
+    items: [
+      { productId: '1', quantity: 1, isChecked: false },
+      { productId: '2', quantity: 2, isChecked: false },
+      { productId: '3', quantity: 3, isChecked: false },
+      { productId: '4', quantity: 4, isChecked: false },
+      { productId: '5', quantity: 5, isChecked: false },
+      { productId: '6', quantity: 6, isChecked: false },
+      { productId: '7', quantity: 7, isChecked: false },
+      { productId: '8', quantity: 8, isChecked: false },
+      { productId: '9', quantity: 9, isChecked: false },
+      { productId: '10', quantity: 10, isChecked: false },
+    ]
+  },
+  lists: [
+    {
+      items: [
+        { productId: '1', quantity: 1, isChecked: false },
+        { productId: '2', quantity: 2, isChecked: false },
+        { productId: '3', quantity: 3, isChecked: false },
+        { productId: '11', quantity: 4, isChecked: false },
+        { productId: '5', quantity: 5, isChecked: false },
+        { productId: '12', quantity: 6, isChecked: false },
+        { productId: '9', quantity: 9, isChecked: false },
+        { productId: '10', quantity: 10, isChecked: false },
+      ],
+      doneAt: new Date('2022-12-21')
+    },
+    {
+      name: 'רשימה לשבועות',
+      items: [
+        { productId: '1', quantity: 1, isChecked: false },
+        { productId: '2', quantity: 2, isChecked: false },
+        { productId: '4', quantity: 3, isChecked: false },
+        { productId: '8', quantity: 4, isChecked: false },
+        { productId: '6', quantity: 6, isChecked: false },
+        { productId: '9', quantity: 9, isChecked: false },
+        { productId: '12', quantity: 10, isChecked: false },
+      ],
+      doneAt: new Date('2022-12-21')
+    }
   ]
 }
 
@@ -53,23 +108,20 @@ export const useShoppingListStore = defineStore('shopping-list', {
     }
   },
   actions: {
-    getItemsByCategory(categoryId: Category['uuid']) {
-      return this.items.filter(item => item.categoryId === categoryId)
-    },
     addItem(item: Item) {
-      this.items.push(item);
+      this.activeList.items.push(item);
     },
     removeItem(item: Item) {
-      const index = this.items.indexOf(item);
+      const index = this.activeList.items.indexOf(item);
       if (index !== -1) {
-        this.items.splice(index, 1);
+        this.activeList.items.splice(index, 1);
       }
     },
     toggleChecked(item: Item) {
       item.isChecked = !item.isChecked;
       if (item.isChecked) {
         this.removeItem(item);
-        this.items.push(item);
+        this.activeList.items.push(item);
       }
     }
   },

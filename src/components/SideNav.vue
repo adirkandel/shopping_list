@@ -6,7 +6,7 @@
           <IconShoppingBag />
         </span>
         <h1 class="font-bold text-gray-200 text-[15px] mr-3">רשימת קניות</h1>
-        <IconClose class="cursor-pointer mr-28 lg:hidden" onclick="openSidebar()"/>
+<!--        <IconClose class="cursor-pointer mr-28 lg:hidden" onclick="openSidebar()"/>-->
       </div>
     </div>
 
@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
   import IconShoppingBag from '~icons/carbon/shopping-bag'
   import IconSearch from '~icons/carbon/search'
   import IconHome from '~icons/carbon/home'
