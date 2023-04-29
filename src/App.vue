@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <h1>My Shopping List</h1>
+  <SideNav />
+  <div class="flex-1">
+    <Main />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Main from "./pages/Main.vue";
+import SideNav from "./components/SideNav.vue";
 
 export default defineComponent({
   name: 'App',
+  components: { SideNav, Main }
 });
 </script>
 
