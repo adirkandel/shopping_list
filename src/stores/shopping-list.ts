@@ -15,7 +15,8 @@ export interface Product {
 export interface Item {
   productId: Product['uuid'];
   quantity: number;
-  isChecked: boolean;
+  isChecked?: boolean;
+  isArchived?: boolean;
 }
 
 interface List {
@@ -114,6 +115,18 @@ export const useShoppingListStore = defineStore('shopping-list', {
         this.changeQuantity(item.productId, item.quantity + 1)
       } else {
         this.activeList.items.push(newItem);
+      }
+    },
+    archiveItem(itemId: string) {
+      const item = this.activeList.items.find(itm => itm.productId === itemId)
+      if (item) {
+        item.isArchived = true
+      }
+    },
+    unarchiveItem(itemId: string) {
+      const item = this.activeList.items.find(itm => itm.productId === itemId)
+      if (item) {
+        item.isArchived = false
       }
     },
     removeItem(item: Item) {
