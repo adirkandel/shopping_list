@@ -5,14 +5,14 @@ export interface Category {
   name: string;
 }
 
-interface Product {
+export interface Product {
   uuid: string;
   name: string;
   image: string;
   categoryId: Category['uuid'];
 }
 
-interface Item {
+export interface Item {
   productId: Product['uuid'];
   quantity: number;
   isChecked: boolean;
@@ -108,13 +108,24 @@ export const useShoppingListStore = defineStore('shopping-list', {
     }
   },
   actions: {
-    addItem(item: Item) {
-      this.activeList.items.push(item);
+    addItem(newItem: Item) {
+      const item = this.activeList.items.find(itm => itm.productId === newItem.productId)
+      if (item) {
+        this.changeQuantity(item.productId, item.quantity + 1)
+      } else {
+        this.activeList.items.push(newItem);
+      }
     },
     removeItem(item: Item) {
       const index = this.activeList.items.indexOf(item);
       if (index !== -1) {
         this.activeList.items.splice(index, 1);
+      }
+    },
+    changeQuantity(productId: string, quantity: number) {
+      const item = this.activeList.items.find(item => item.productId === productId)
+      if (item) {
+        item.quantity = quantity
       }
     },
     toggleChecked(item: Item) {
