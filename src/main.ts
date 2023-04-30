@@ -12,8 +12,6 @@ app.use(router)
 const pinia = createPinia()
 app.use(pinia)
 
-
-
 app.directive("click-outside", clickOutside)
 
 app.mount('#app')

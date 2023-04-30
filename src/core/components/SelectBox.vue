@@ -34,7 +34,6 @@ import { ref } from "vue";
 const search = ref('')
 
 const onSearch = (text: string) => {
-  console.log("adir - text", text);
   search.value = text.toLowerCase()
 }
 

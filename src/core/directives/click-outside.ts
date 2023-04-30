@@ -9,10 +9,10 @@ const clickOutside: Directive = {
         binding.value();
       }
     };
-    document.addEventListener("click", el.callback);
+    document.addEventListener("click", el.callback, true);
   },
   unmounted: el => {
-    document.removeEventListener("click", el.callback);
+    document.removeEventListener("click", el.callback, true);
   }
 };
 
