@@ -26,7 +26,9 @@ const props = defineProps({
   label: { type: String, required: false },
   modelValue: { type: Number, required: true },
 });
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: number): void
+}>()
 
 let value = computed({
   get() {
