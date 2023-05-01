@@ -19,7 +19,7 @@ export interface Item {
   isArchived?: boolean;
 }
 
-interface List {
+export interface List {
   items: Item[]
   name?: string
   doneAt?: Date
@@ -147,12 +147,5 @@ export const useShoppingListStore = defineStore('shopping-list', {
         item.quantity = quantity
       }
     },
-    toggleChecked(item: Item) {
-      item.isChecked = !item.isChecked;
-      if (item.isChecked) {
-        this.removeItem(item);
-        this.activeList.items.push(item);
-      }
-    }
   },
 })
