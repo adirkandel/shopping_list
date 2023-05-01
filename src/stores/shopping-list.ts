@@ -117,6 +117,18 @@ export const useShoppingListStore = defineStore('shopping-list', {
         this.activeList.items.push(newItem);
       }
     },
+    removeItem(itemId: string) {
+      const index = this.activeList.items.findIndex(item => item.productId === itemId);
+      if (index >= 0) {
+        this.activeList.items.splice(index, 1);
+      }
+    },
+    toggleCheckItem(itemId: string) {
+      const item = this.activeList.items.find(itm => itm.productId === itemId)
+      if (item) {
+        item.isChecked = !item.isChecked
+      }
+    },
     archiveItem(itemId: string) {
       const item = this.activeList.items.find(itm => itm.productId === itemId)
       if (item) {
@@ -127,12 +139,6 @@ export const useShoppingListStore = defineStore('shopping-list', {
       const item = this.activeList.items.find(itm => itm.productId === itemId)
       if (item) {
         item.isArchived = false
-      }
-    },
-    removeItem(item: Item) {
-      const index = this.activeList.items.indexOf(item);
-      if (index !== -1) {
-        this.activeList.items.splice(index, 1);
       }
     },
     changeQuantity(productId: string, quantity: number) {
