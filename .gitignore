@@ -30,3 +30,6 @@ vue.config.js
 .env.production.local
 
 .config
+
+# Local Netlify folder
+.netlify
