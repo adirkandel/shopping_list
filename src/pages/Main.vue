@@ -1,13 +1,13 @@
 <template>
   <div class="h-full flex flex-col overflow-hidden">
     <div class="text-gray-100 h-[4.5rem] flex items-center border-b border-gray-200 shrink-0">
-      <div class="2xl:w-1/3 md:w-2/5 mx-auto px-4">
+      <div class="2xl:w-1/3 md:w-5/12 mx-auto px-4">
         <SelectBox :products="store.products" @select="addItem" />
       </div>
     </div>
 
     <div class="overflow-y-auto">
-      <div class="p-4 2xl:w-1/3 md:w-2/5 mx-auto">
+      <div class="p-4 2xl:w-1/3 md:w-5/12 mx-auto">
         <h1 class="text-3xl font-bold mb-3">{{ activeList.name || "רשימת קניות" }}</h1>
 
         <div class="flex flex-col gap-6">
@@ -23,27 +23,38 @@
 
               <ul class="flex flex-col gap-y-4" :class="{hidden: closedCategories.includes(category.uuid)}">
                 <template v-for="item in getItemsByCategory(category.uuid)" :key="item.uuid">
-                  <li class="shadow rounded-md overflow-hidden flex items-center h-[3.5rem]">
-                    <button class="h-full w-10 text-center bg-green-500 text-white">
-                      <IconCheck class="mx-auto" />
+                  <li :class="{'order-0': !item.isChecked, 'order-1': item.isChecked}"
+                      class="shadow rounded-md overflow-hidden flex items-center h-[3.5rem]">
+                    <button @click="store.toggleCheckItem(item.uuid)" class="h-full w-10 flex justify-center items-center text-white"
+                            :class="{'bg-green-500': !item.isChecked, 'bg-sky-400': item.isChecked}">
+                      <IconCheck v-if="!item.isChecked" />
+                      <IconUncheck v-else />
                     </button>
 
-                    <button class="h-full w-10 text-center bg-gray-100 text-gray-500"
+                    <button class="h-full w-10 text-center bg-gray-100 text-gray-500 disabled:opacity-40"
+                            :disabled="item.isChecked"
                             @click="store.archiveItem(item.uuid)">
                       <IconArchive class="mx-auto" />
                     </button>
 
-                    <div class="flex items-center px-4 gap-x-3 bg-white text-sm font-medium text-gray-800 flex-1">
-                      <img :src="`https://loremflickr.com/200/200/${item.name}`" :alt="item.name"
+                    <div class="flex items-center px-4 gap-x-3 bg-white text-sm font-medium text-gray-800 flex-1"
+                         :class="{'opacity-40 pointer-events-none': item.isChecked}">
+                      <img :src="`https://loremflickr.com/200/200/${item.name}`"
+                           :alt="item.name"
                            class="w-10 h-10 rounded-md" />
-                      <span class="ml-2 font-semibold text-gray-700"
-                            :class="{ 'line-through': item.isChecked }">{{ item.name }}</span>
+
+                      <span class="ml-2 font-semibold text-gray-700">
+                        {{ item.name }}
+                      </span>
+
                       <Counter :model-value="item.quantity"
                                @update:model-value="(quantity) => changeQuantity(item.productId, quantity)"
                                class="mr-auto" />
                     </div>
 
-                    <button class="h-full w-10 text-center bg-red-500 text-white">
+                    <button class="h-full w-10 text-center bg-red-500 text-white disabled:opacity-40"
+                            @click="store.removeItem(item.uuid)"
+                            :disabled="item.isChecked">
                       <IconClose class="mx-auto" />
                     </button>
                   </li>
@@ -60,7 +71,8 @@
               class="shadow disabled:opacity-50 rounded-full bg-gray-50 w-14 h-14">
         <span class="relative mx-auto inline-block align-middle">
           <IconArchive />
-          <span v-show="archivedItems.length > 0" class="absolute -top-1 -right-1 bg-green-500 w-2 h-2 rounded-full"></span>
+          <span v-show="archivedItems.length > 0"
+                class="absolute -top-1 -right-1 bg-green-500 w-2 h-2 rounded-full"></span>
         </span>
       </button>
 
@@ -82,7 +94,7 @@
 
 <script lang="ts" setup>
 import IconCheck from "~icons/carbon/checkmark";
-// import IconArchive from '~icons/carbon/box'
+import IconUncheck from "~icons/carbon/redo";
 import IconArchive from "~icons/fluent-mdl2/archive";
 import IconArchiveUndo from "~icons/fluent-mdl2/archive-undo";
 import IconClose from "~icons/carbon/close";
@@ -130,9 +142,9 @@ const archivedItems = computed(() => {
       })
     );
   if (items.length === 0) {
-    showArchive.value = false
+    showArchive.value = false;
   }
-  return items
+  return items;
 });
 
 const availableCategories = computed<Category[]>(() => {
