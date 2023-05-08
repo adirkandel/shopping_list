@@ -8,6 +8,7 @@ yarn.lock
 # Ignore editor and operating system files
 *.log
 .vscode/
+.idea/
 .DS_Store
 Thumbs.db
 
@@ -33,3 +34,5 @@ vue.config.js
 
 # Local Netlify folder
 .netlify
+
+http-samples
