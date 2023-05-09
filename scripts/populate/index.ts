@@ -1,6 +1,7 @@
 import { Client, Databases, ID, Models } from "node-appwrite";
 import { config } from "dotenv";
 import populateLists from "./list";
+import populateProducts from "./product";
 
 config()
 
@@ -13,4 +14,5 @@ const databases = new Databases(client);
 
 (async () => {
   await populateLists(databases)
+  await populateProducts(databases)
 })()

@@ -20,12 +20,13 @@ export const createCollectionsAndAttributes = async (databases: Databases, colle
     const promises: Promise<Models.AttributeDatetime | Models.AttributeString | Models.AttributeBoolean>[] = []
 
     Object.entries(model).forEach(([attrName, attrOpts]) => {
+      const isRequired = 'isOptional' in attrOpts ? !attrOpts.isOptional : true
       if (attrOpts.type === Date) {
         promises.push(databases.createDatetimeAttribute(
           process.env.APPWRITE_DATABASE_ID!,
           collection.$id,
           attrName,
-          'required' in attrOpts ? !!attrOpts.required : true,
+          isRequired,
         ))
       }
       if (attrOpts.type === String) {
@@ -34,7 +35,7 @@ export const createCollectionsAndAttributes = async (databases: Databases, colle
           collection.$id,
           attrName,
           120,
-          'required' in attrOpts ? !!attrOpts.required : true,
+          isRequired,
         ))
       }
       if (attrOpts.type === Boolean) {
@@ -42,7 +43,7 @@ export const createCollectionsAndAttributes = async (databases: Databases, colle
           process.env.APPWRITE_DATABASE_ID!,
           collection.$id,
           attrName,
-          'required' in attrOpts ? !!attrOpts.required : true,
+          isRequired,
         ))
       }
     })
