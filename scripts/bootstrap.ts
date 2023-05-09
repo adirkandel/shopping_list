@@ -2,7 +2,6 @@ import { Client, Databases } from "node-appwrite";
 import { config } from "dotenv"
 import { CollectionsList } from "../functions/core/consts";
 import { createCollectionsAndAttributes } from "./utils";
-import { ListModel } from "../functions/list/types";
 
 config()
 
@@ -14,6 +13,7 @@ const client = new Client()
 const databases = new Databases(client);
 
 (async () => {
-  const { LIST_COLLECTION } = CollectionsList
-  await createCollectionsAndAttributes(databases, LIST_COLLECTION.id, LIST_COLLECTION.name, ListModel)
+  for (let { id, name, model } of Object.values(CollectionsList)) {
+    await createCollectionsAndAttributes(databases, id, name, model)
+  }
 })()

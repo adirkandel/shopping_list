@@ -14,9 +14,9 @@ const databases = new Databases(client);
 (async () => {
   const promises: Promise<string>[] = []
 
-  const entries = Object.entries(CollectionsList)
+  const entries = Object.values(CollectionsList)
 
-  entries.forEach(([collectionName, collection]) => {
+  entries.forEach((collection) => {
     promises.push(new Promise<string>(async () => {
       await databases.deleteCollection(process.env.APPWRITE_DATABASE_ID!, collection.id)
       console.log(`Collection name: ${collection.name} was deleted successfully`)

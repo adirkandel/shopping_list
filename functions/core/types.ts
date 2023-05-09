@@ -16,17 +16,20 @@ export type HandlerFunction = <Data>(actions: DbActions<Data>) => Handler
 export type Model = {
   [key: string]: {
     type: (value?: any) => any,
-    required?: boolean
+    isOptional?: boolean
   }
 }
 
 export type ModelToType<M extends Model> = {
-  [key in keyof M]: M[key]['required'] extends false ? ReturnType<M[key]['type']> | undefined : ReturnType<M[key]['type']>
+  [key in keyof M]: M[key]['isOptional'] extends true ? ReturnType<M[key]['type']> | undefined : ReturnType<M[key]['type']>
 }
+
+export type Redefine<T, K> = Omit<T, keyof K> & K;
 
 export type CollectionsListType = {
   [key: string]: {
     id: string,
     name: string,
+    model: Model
   }
 }
