@@ -1,4 +1,4 @@
-import { Model, ModelToType, Redefine } from "../core/types";
+import { ModelToType, Redefine } from "../core/types";
 
 export const ProductCategories = {
   Dairy: 'Dairy',
@@ -11,7 +11,7 @@ export const ProductCategories = {
 export const ProductModel = {
   name: { type: String },
   image: { type: String, isOptional: true },
-  categoryId: { type: String },
+  categoryId: { type: String, size: 50 },
 } as const
 
 export type Product = Redefine<ModelToType<typeof ProductModel>, {categoryId: keyof typeof ProductCategories}>

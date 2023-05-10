@@ -1,6 +1,6 @@
 import { Client, Databases } from "node-appwrite";
 import { config } from "dotenv"
-import { CollectionsList } from "../functions/core/consts";
+import { CollectionsList } from "../functions/core/collections";
 
 config()
 
@@ -18,8 +18,12 @@ const databases = new Databases(client);
 
   entries.forEach((collection) => {
     promises.push(new Promise<string>(async () => {
-      await databases.deleteCollection(process.env.APPWRITE_DATABASE_ID!, collection.id)
-      console.log(`Collection name: ${collection.name} was deleted successfully`)
+      try {
+        await databases.deleteCollection(process.env.APPWRITE_DATABASE_ID!, collection.id)
+        console.log(`Collection name: ${collection.name} was deleted successfully`)
+      } catch (e: any) {
+        console.log(`Collection name: ${collection.name} - ${e.message}`)
+      }
     }))
   })
 
