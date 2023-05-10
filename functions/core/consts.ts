@@ -1,16 +1,12 @@
-import { CollectionsListType } from "./types";
-import { ListModel } from "../list/types";
-import { ProductModel } from "../product/types";
+export const RelationshipTypesList = {
+  OneToOne: 'oneToOne',
+  OneToMany: 'oneToMany',
+  ManyToOne: 'manyToOne',
+  ManyToMany: 'manyToMany',
+} as const
 
-export const CollectionsList: CollectionsListType = {
-  LIST_COLLECTION: {
-    id: 'list-collection-id',
-    name: 'list',
-    model: ListModel
-  },
-  PRODUCT_COLLECTION: {
-    id: 'product-collection-id',
-    name: 'product',
-    model: ProductModel
-  },
+export const RelationshipOnDeleteList = {
+  Restrict: 'restrict',
+  Cascade: 'cascade',
+  SetNull: 'setNull',
 } as const

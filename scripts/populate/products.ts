@@ -1,5 +1,5 @@
 // Insert dummy/initial data to the database
-import { CollectionsList } from "../../functions/core/consts";
+import { CollectionsList } from "../../functions/core/collections";
 import { Databases, ID, Models } from "node-appwrite";
 import { Product, ProductCategories } from "../../functions/product/types";
 
